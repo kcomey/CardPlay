@@ -70,9 +70,10 @@ exports.unpromote = function(card, toStack, game) {
 
 exports.reveal = function(stack, game) {
   var newGame = solitaire.cloneGame(game);
-  if (solitaire.stacks[stack].visible.length === 0 &&
-    solitaire.stacks[stack].hidden.length > 0) {
-    newGame.stacks[stack].visible = newGame.stacks[stack].hidden.slice(1);
+  if (newGame.stacks[stack].visible.length === 0 &&
+    newGame.stacks[stack].hidden.length > 0) {
+    newGame.stacks[stack].visible = newGame.stacks[stack].hidden.slice(0, 1);
+    newGame.stacks[stack].hidden = newGame.stacks[stack].hidden.slice(1);
   } else {
     return null;
   }

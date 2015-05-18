@@ -87,7 +87,8 @@ describe('Solitaire', function() {
   it('can\'t unpromote the Ace of Clubs on a fresh game', function() {
     var g = game.createSpecial();
     var g2 = actions.promote(1, 1, g);
-    var g3 = actions.unpromote(1, 1, g2);
-    expect(g3).to.not.be.null;
+    var g3 = actions.reveal(1, g2);
+    var g4 = actions.unpromote(1, 1, g3);
+    expect(g4).to.not.be.null;
   });
 });
