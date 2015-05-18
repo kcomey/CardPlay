@@ -28,6 +28,39 @@ exports.create = function(options) {
   };
 }
 
+exports.getSuit = function(card) {
+  if ( 1 <= card && card <= 13) { return "clubs"; }
+  else if (14 <= card && card <= 26) { return "diamonds"; }
+  else if (27 <= card && card <= 39) { return "spades"; }
+  else if (40 <= card && card <= 52) { return "hearts"; }
+  return null;
+}
+
+exports.cloneStacks = function(stacks) {
+  return {
+    "draw": stacks.draw,
+    "clubs": stacks.clubs,
+    "diamonds": stacks.diamonds,
+    "spades": stacks.spades,
+    "hearts": stacks.hearts,
+    0: stacks[0],
+    1: stacks[1],
+    2: stacks[2],
+    3: stacks[3],
+    4: stacks[4],
+    5: stacks[5],
+    6: stacks[6]
+  };
+}
+
+exports.cloneGame = function(game) {
+  return {
+    options: game.options,
+    deck: game.deck,
+    stacks: this.cloneStacks(game.stacks)
+  };
+}
+
 exports.validate = function(game) {
   return true;
 }
