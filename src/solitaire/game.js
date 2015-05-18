@@ -29,7 +29,13 @@ exports.create = function(options) {
 }
 
 exports.getRank = function(card) {
+  var rank = card % 13;
 
+  if (rank === 0) {
+    return 13;
+  } else {
+    return rank;
+  }
 }
 
 exports.getSuit = function(card) {
@@ -52,7 +58,7 @@ exports.validMove = function(game, card, from, to) {
   if (to >= 0 && to <= 6) {
     if (game.stacks[to].visible.length === 0) {
       if (game.stacks[to].hidden.length === 0 &&
-        solitaire.getRank(card) === 13) {
+        this.getRank(card) === 13) {
         return true;
       }
 
@@ -60,11 +66,11 @@ exports.validMove = function(game, card, from, to) {
     }
 
     var aboveCard = game.stacks[to].visible[0]
-    if (solitaire.getRank(card) !== solitaire.getRank(aboveCard) - 1) {
+    if (this.getRank(card) !== this.getRank(aboveCard) - 1) {
       return false;
     }
 
-    if (solitaire.getColor(card) === solitaire.getColor(aboveCard)) {
+    if (this.getColor(card) === this.getColor(aboveCard)) {
       return false;
     }
 
