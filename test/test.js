@@ -19,8 +19,8 @@ describe('Solitaire', function() {
     var g2 = actions.draw(g);
     expect(g.deck.length).to.equal(24);
     expect(g2.deck.length).to.equal(21);
-    expect(g.draw.length).to.equal(0);
-    expect(g2.draw.length).to.equal(3);
+    expect(g.stacks.draw.length).to.equal(0);
+    expect(g2.stacks.draw.length).to.equal(3);
   });
 
   it('should be able to draw 24 cards on a fresh game', function() {
@@ -35,8 +35,8 @@ describe('Solitaire', function() {
     g2 = actions.draw(g2);
     expect(g.deck.length).to.equal(24);
     expect(g2.deck.length).to.equal(0);
-    expect(g.draw.length).to.equal(0);
-    expect(g2.draw.length).to.equal(24);
+    expect(g.stacks.draw.length).to.equal(0);
+    expect(g2.stacks.draw.length).to.equal(24);
   });
 
   it('should draw 24 cards, flip the deck, and be fresh again', function() {
