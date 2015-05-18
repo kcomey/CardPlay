@@ -36,6 +36,31 @@ exports.getSuit = function(card) {
   return null;
 }
 
+exports.cloneStacks = function(stacks) {
+  return {
+    "draw": stacks.draw,
+    "clubs": stacks.clubs,
+    "diamonds": stacks.diamonds,
+    "spades": stacks.spades,
+    "hearts": stacks.hearts,
+    0: stacks[0],
+    1: stacks[1],
+    2: stacks[2],
+    3: stacks[3],
+    4: stacks[4],
+    5: stacks[5],
+    6: stacks[6]
+  };
+}
+
+exports.cloneGame = function(game) {
+  return {
+    options: game.options,
+    deck: game.deck,
+    stacks: this.cloneStacks(game.stacks)
+  };
+}
+
 exports.validate = function(game) {
   return true;
 }
