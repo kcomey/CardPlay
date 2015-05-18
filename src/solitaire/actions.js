@@ -26,10 +26,11 @@ exports.flip = function(game) {
 }
 
 exports.move = function(card, fromStack, toStack, game) {
+
   return newGame;
 }
 
-exports.promote = function(card, game) {
+exports.promote = function(card, fromStack, game) {
   return newGame;
 }
 
