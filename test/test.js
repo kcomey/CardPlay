@@ -21,5 +21,59 @@ describe('Solitaire', function() {
     expect(g2.deck.length).to.equal(21);
     expect(g.draw.length).to.equal(0);
     expect(g2.draw.length).to.equal(3);
-  })
+  });
+
+  it('should be able to draw 24 cards on a fresh game', function() {
+    var g = game.create();
+    var g2 = actions.draw(g);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    expect(g.deck.length).to.equal(24);
+    expect(g2.deck.length).to.equal(0);
+    expect(g.draw.length).to.equal(0);
+    expect(g2.draw.length).to.equal(24);
+  });
+
+  it('should draw 24 cards, flip the deck, and be fresh again', function() {
+    var g = game.create();
+    var g2 = actions.draw(g);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.flip(g2);
+    expect(g).to.eql(g2);
+  });
+
+  it('should fail to flip the deck on a fresh game', function() {
+    expect(actions.flip(game.create())).to.be.null;
+  });
+
+  it('should fail to draw after drawing 24 cards in a fresh game', function() {
+    var g = game.create();
+    var g2 = actions.draw(g);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    expect(actions.draw(g2)).to.be.null;
+  });
+
+  it('should only draw 1 card when created with options {draw:1}', function() {
+    var g = game.create({ draw: 1 });
+    var g2 = actions.draw(g);
+    expect(g2.deck.length).to.equal(23);
+    expect(g2.draw.length).to.equal(1);
+  });
 });
