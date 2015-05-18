@@ -1,8 +1,13 @@
 'use strict';
 
 exports.draw = function(game) {
-
-  return game;
+  if (game.deck.length === 0) {
+    return null;
+  }
+  var newGame = game;
+  newGame.deck = game.deck.slice(game.options.draw);
+  newGame.draw = game.deck.slice(0, game.options.draw).concat(game.draw);
+  return newGame;
 }
 
 exports.flip = function(game) {
