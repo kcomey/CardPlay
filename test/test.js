@@ -1,28 +1,79 @@
-//var myBitmap = require('../bitmap_header_module.js');
-//var expect = require('chai').expect;
+'use strict';
 
+var expect = require('chai').expect;
 
+describe('Solitaire', function() {
+  var game = require('../src/solitaire/game');
+  var actions = require('../src/solitaire/actions');
 
-describe('comparing bitmapObject.palette to bitmapObject.newPalette', function() {
-  //Returns bitmapObject.palette
-  //var original = myBitmap.readPalette();
-  //Returns bitmapObject.newPalette
-  //var transformed = myBitmap.transformPalette();
-
-  it('expect transformed to be different than original', function () {
-    //Should not be a copy of the data
-    //expect(transformed).to.not.equal(original);
+  it('should create a valid game', function () {
+    expect(game.validate(game.create())).to.be.true;
   });
 
-  it('expect length of both properties to be the same', function () {
-    //But should be same size
-    //expect(original.length).to.equal(transformed.length);
+  it('should create games with 24 cards in the deck', function () {
+    expect(game.create().deck.length).to.equal(24);
+  });
+
+  it('should draw 3 cards from the deck', function() {
+    var g = game.create();
+    var g2 = actions.draw(g);
+    expect(g.deck.length).to.equal(24);
+    expect(g2.deck.length).to.equal(21);
+    expect(g.draw.length).to.equal(0);
+    expect(g2.draw.length).to.equal(3);
+  });
+
+  it('should be able to draw 24 cards on a fresh game', function() {
+    var g = game.create();
+    var g2 = actions.draw(g);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    expect(g.deck.length).to.equal(24);
+    expect(g2.deck.length).to.equal(0);
+    expect(g.draw.length).to.equal(0);
+    expect(g2.draw.length).to.equal(24);
+  });
+
+  it('should draw 24 cards, flip the deck, and be fresh again', function() {
+    var g = game.create();
+    var g2 = actions.draw(g);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.flip(g2);
+    expect(g).to.eql(g2);
+  });
+
+  it('should fail to flip the deck on a fresh game', function() {
+    expect(actions.flip(game.create())).to.be.null;
+  });
+
+  it('should fail to draw after drawing 24 cards in a fresh game', function() {
+    var g = game.create();
+    var g2 = actions.draw(g);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    g2 = actions.draw(g2);
+    expect(actions.draw(g2)).to.be.null;
+  });
+
+  it('should only draw 1 card when created with options {draw:1}', function() {
+    var g = game.create({ draw: 1 });
+    var g2 = actions.draw(g);
+    expect(g2.deck.length).to.equal(23);
+    expect(g2.draw.length).to.equal(1);
   });
 });
-
-
-
-
-
-
-
