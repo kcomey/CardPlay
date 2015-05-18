@@ -13,4 +13,13 @@ describe('Solitaire', function() {
   it('should create games with 24 cards in the deck', function () {
     expect(game.create().deck.length).to.equal(24);
   });
+
+  it('should draw 3 cards from the deck', function() {
+    var g = game.create();
+    var g2 = game.draw(g);
+    expect(g.deck.length).to.equal(24);
+    expect(g2.deck.length).to.equal(21);
+    expect(g.draw.length).to.equal(0);
+    expect(g2.draw.length).to.equal(3);
+  })
 });
