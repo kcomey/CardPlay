@@ -16,7 +16,7 @@ describe('Solitaire', function() {
 
   it('should draw 3 cards from the deck', function() {
     var g = game.create();
-    var g2 = game.draw(g);
+    var g2 = actions.draw(g);
     expect(g.deck.length).to.equal(24);
     expect(g2.deck.length).to.equal(21);
     expect(g.draw.length).to.equal(0);
