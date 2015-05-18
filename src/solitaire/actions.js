@@ -54,10 +54,18 @@ exports.promote = function(card, fromStack, game) {
   return newGame;
 };
 
-
-
 exports.unpromote = function(card, toStack, game) {
-  return game;
+  var suit = solitaire.getSuit(card);
+  if (solitaire.validMove(game, card, suit, toStack)) {
+    var newGame = solitaire.cloneGame(game);
+
+    newGame.stacks[toStack] = [card].concat(newGame.stacks[toStack]);
+    newGame.stacks[suit] = newGame.stacks[suit].slice(1);
+
+    return newGame;
+  }
+
+  return null;
 };
 
 exports.reveal = function(stack, game) {
