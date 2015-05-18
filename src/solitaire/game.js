@@ -48,8 +48,30 @@ exports.getColor = function(card) {
   return null;
 }
 
-exports.validMove = function(game, card, fromStack, toStack) {
+exports.validMove = function(game, card, from, to) {
+  if (to >= 0 && to <= 6) {
+    if (game.stacks[to].visible.length === 0) {
+      if (game.stacks[to].hidden.length === 0 &&
+        solitaire.getRank(card) === 13) {
+        return true;
+      }
 
+      return false;
+    }
+
+    var aboveCard = game.stacks[to].visible[0]
+    if (solitaire.getRank(card) !== solitaire.getRank(aboveCard) - 1) {
+      return false;
+    }
+
+    if (solitaire.getColor(card) === solitaire.getColor(aboveCard)) {
+      return false;
+    }
+
+    return true;
+
+
+  } else { return false; }
 }
 
 exports.cloneStacks = function(stacks) {
