@@ -88,6 +88,6 @@ describe('Solitaire', function() {
     var g = game.createSpecial();
     var g2 = actions.promote(1, 1, g);
     var g3 = actions.unpromote(1, 1, g2);
-    expect(g3).to.be.null;
+    expect(g3).to.not.be.null;
   });
 });
