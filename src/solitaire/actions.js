@@ -4,9 +4,14 @@ exports.draw = function(game) {
   if (game.deck.length === 0) {
     return null;
   }
-  var newGame = game;
+  var newGame = {};
+  newGame.id = game.id;
+  newGame.game = game.game;
+  newGame.options = game.options;
   newGame.deck = game.deck.slice(game.options.draw);
   newGame.draw = game.deck.slice(0, game.options.draw).concat(game.draw);
+  newGame.stacks = game.stacks;
+  newGame.promoted = game.promoted;
   return newGame;
 }
 
