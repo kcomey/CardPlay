@@ -28,6 +28,14 @@ exports.create = function(options) {
   };
 }
 
+exports.getSuit = function(card) {
+  if ( 1 <= card && card <= 13) { return "clubs"; }
+  else if (14 <= card && card <= 26) { return "diamonds"; }
+  else if (27 <= card && card <= 39) { return "spades"; }
+  else if (40 <= card && card <= 52) { return "hearts"; }
+  return null;
+}
+
 exports.validate = function(game) {
   return true;
 }
