@@ -28,12 +28,28 @@ exports.create = function(options) {
   };
 }
 
+exports.getRank = function(card) {
+
+}
+
 exports.getSuit = function(card) {
   if ( 1 <= card && card <= 13) { return "clubs"; }
   else if (14 <= card && card <= 26) { return "diamonds"; }
   else if (27 <= card && card <= 39) { return "spades"; }
   else if (40 <= card && card <= 52) { return "hearts"; }
   return null;
+}
+
+exports.getColor = function(card) {
+  if ( 1 <= card && card <= 13) { return "black"; }
+  else if (14 <= card && card <= 26) { return "red"; }
+  else if (27 <= card && card <= 39) { return "black"; }
+  else if (40 <= card && card <= 52) { return "red"; }
+  return null;
+}
+
+exports.validMove = function(game, card, fromStack, toStack) {
+
 }
 
 exports.cloneStacks = function(stacks) {
