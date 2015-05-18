@@ -100,4 +100,10 @@ describe('Solitaire', function() {
     expect(g3.stacks.draw.length).to.equal(2);
     expect(g3.stacks[3].visible.length).to.equal(2);
   });
+
+  it('should return a randomized deck of length 52', function() {
+    var d = game.shuffleDeck();
+    expect(d).to.not.be.null;
+    expect(d.length).to.equal(52);
+  })
 });

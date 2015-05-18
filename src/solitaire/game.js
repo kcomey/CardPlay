@@ -1,5 +1,26 @@
 'use strict';
 
+exports.shuffleDeck = function() {
+  var deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+  14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+  27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+  40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52];
+  var m = 52, t, i;
+
+  // While there remain elements to shuffle…
+  while (m) {
+
+    // Pick a remaining element…
+    i = Math.floor(Math.random() * m--);
+
+    // And swap it with the current element.
+    t = deck[m];
+    deck[m] = deck[i];
+    deck[i] = t;
+  }
+  return deck;
+}
+
 exports.create = function(options) {
   options = options || {};
   var drawSize = options.draw || 3;
