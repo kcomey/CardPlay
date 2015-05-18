@@ -84,11 +84,20 @@ describe('Solitaire', function() {
     expect(g2.stacks.clubs.length).to.equal(1);
   });
 
-  it('can\'t unpromote the Ace of Clubs on a fresh game', function() {
+  it('can\'t unpromote the Ace of Clubs on a special game', function() {
     var g = game.createSpecial();
     var g2 = actions.promote(1, 1, g);
     var g3 = actions.reveal(1, g2);
     var g4 = actions.unpromote(1, 1, g3);
     expect(g4).to.not.be.null;
+  });
+
+  it('move card #31 from draw to stack 3', function() {
+    var g = game.create();
+    var g2 = actions.draw(g);
+    var g3 = actions.move(31, 'draw', 3, g2);
+    expect(g3).to.not.be.null;
+    expect(g3.stacks.draw.length).to.equal(2);
+    expect(g3.stacks[3].visible.length).to.equal(2);
   });
 });

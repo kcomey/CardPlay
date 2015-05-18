@@ -26,9 +26,18 @@ exports.flip = function(game) {
 };
 
 exports.move = function(card, fromStack, toStack, game) {
-  var newGame = solitaire.cloneGame(game);
+  var suit = solitaire.getSuit(card);
+  if (solitaire.validMove(game, card, suit, toStack)) {
+    var newGame = solitaire.cloneGame(game);
 
-  return newGame;
+    if (fromStack === 'draw') {
+    newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
+    newGame.stacks.draw = newGame.stacks.draw.slice(1);
+    }
+    return newGame;
+  }
+
+  return null;
 };
 
 exports.promote = function(card, fromStack, game) {
