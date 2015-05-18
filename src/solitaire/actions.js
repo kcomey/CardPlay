@@ -5,13 +5,12 @@ exports.draw = function(game) {
     return null;
   }
   var newGame = {};
-  newGame.id = game.id;
-  newGame.game = game.game;
   newGame.options = game.options;
-  newGame.deck = game.deck.slice(game.options.draw);
-  newGame.draw = game.deck.slice(0, game.options.draw).reverse().concat(game.draw);
   newGame.stacks = game.stacks;
-  newGame.promoted = game.promoted;
+  newGame.deck = game.deck.slice(game.options.draw);
+  newGame.stacks.draw = game.deck.slice(0, game.options.draw).reverse()
+    .concat(game.stacks.draw);
+
   return newGame;
 }
 
@@ -20,8 +19,6 @@ exports.flip = function(game) {
     return null;
   }
   var newGame = {};
-  newGame.id = game.id;
-  newGame.game = game.game;
   newGame.options = game.options;
   newGame.deck = game.draw.slice(0).reverse();
   newGame.draw = [];
@@ -30,8 +27,15 @@ exports.flip = function(game) {
   return newGame;
 }
 
-exports.move = function(card, toStack, game) {
-  return game;
+exports.move = function(card, fromStack, toStack, game) {
+  var newGame = {};
+  var cardTo = game.stacks[fromStack].visible[0];
+  newGame.options = game.options;
+  newGame.deck = game.deck;
+  newGame.draw = game.draw;
+  newGame.stacks = game.stacks;
+  newGame.promoted = game.promoted;
+  return newGame;
 }
 
 exports.promote = function(card, game) {
