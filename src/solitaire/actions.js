@@ -9,14 +9,25 @@ exports.draw = function(game) {
   newGame.game = game.game;
   newGame.options = game.options;
   newGame.deck = game.deck.slice(game.options.draw);
-  newGame.draw = game.deck.slice(0, game.options.draw).concat(game.draw);
+  newGame.draw = game.deck.slice(0, game.options.draw).reverse().concat(game.draw);
   newGame.stacks = game.stacks;
   newGame.promoted = game.promoted;
   return newGame;
 }
 
 exports.flip = function(game) {
-  return game;
+  if (game.deck.length !== 0) {
+    return null;
+  }
+  var newGame = {};
+  newGame.id = game.id;
+  newGame.game = game.game;
+  newGame.options = game.options;
+  newGame.deck = game.draw.slice(0).reverse();
+  newGame.draw = [];
+  newGame.stacks = game.stacks;
+  newGame.promoted = game.promoted;
+  return newGame;
 }
 
 exports.move = function(card, toStack, game) {
