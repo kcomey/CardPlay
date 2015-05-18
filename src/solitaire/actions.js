@@ -69,5 +69,12 @@ exports.unpromote = function(card, toStack, game) {
 };
 
 exports.reveal = function(stack, game) {
-  return game;
+  var newGame = solitaire.cloneGame(game);
+  if (solitaire.stacks[stack].visible.length === 0 &&
+    solitaire.stacks[stack].hidden.length > 0) {
+    newGame.stacks[stack].visible = newGame.stacks[stack].hidden.slice(1);
+  } else {
+    return null;
+  }
+  return newGame;
 };
