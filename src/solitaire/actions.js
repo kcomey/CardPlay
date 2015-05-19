@@ -33,6 +33,11 @@ exports.move = function(card, fromStack, toStack, game) {
     if (fromStack === 'draw') {
     newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
     newGame.stacks.draw = newGame.stacks.draw.slice(1);
+    } else if (typeof fromStack === 'number') {
+      if (newGame.stacks[fromStack].visible.length === 1) {
+        newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
+        newGame.stacks[fromStack].visible = newGame.stacks[fromStack].visible.slice(1);
+      }
     }
     return newGame;
   }
