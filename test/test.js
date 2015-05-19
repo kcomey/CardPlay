@@ -121,6 +121,17 @@ describe('Solitaire', function() {
     expect(d).to.not.equal(d2);
   });
 
+  it('generates a "chain" diagonal with 5 6 5 4 3 2 A', function() {
+    var g = game.create({deck: 'chain'});
+    expect(g.stacks[0].visible).to.equal(44);
+    expect(g.stacks[1].visible).to.equal(6);
+    expect(g.stacks[2].visible).to.equal(18);
+    expect(g.stacks[3].visible).to.equal(4);
+    expect(g.stacks[4].visible).to.equal(16);
+    expect(g.stacks[5].visible).to.equal(2);
+    expect(g.stacks[6].visible).to.equal(14);
+  });
+
   it('generates valid games with valid stacks', function() {
     var g = game.create({deck: 'unshuffled'});
 
