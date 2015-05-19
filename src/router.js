@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var authenticateUser = require('./authenticate.js');
 require('./config_passport')(passport);
+var game = require('./solitaire/game.js');
 
 module.exports = function router(app) {
 
@@ -21,21 +22,17 @@ app.get('/login', function(req, res) {
 
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
+  function(req, res, next) {
     // User has successfully logged in here, send wherever you want them to go
-    res.status(200).send('Logged in');
-    //res.redirect('/');
+    authenticateUser.setCookie(req, res, next);
   });
 
-  app.get('/solitaire', function(req, res) {
-  // Send to draw function
-    console.log('not getting here?');
-    res.status(200).send('Checking authentication, this works')
+app.route('/')
+  app.get('/solitaire/newgame', function(req, res) {
+    var newGame = game.create();
+    var gameID = newGame.options.id;
+    res.redirect('/game/' + gameID)
   })
-
-
-// Needs to be fixed, changed, deleted, whatever
-/*app.route('/solitaire')
   app.post('/draw', function(req, res) {
   // Send to draw function
   })
@@ -53,5 +50,5 @@ app.post('/login',
   })
   app.post('/reveal', function(req, res) {
   // Send to reveal function
-  });*/
+  });
 };

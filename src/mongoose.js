@@ -14,6 +14,6 @@ module.exports.Solitaire = db.model('solitaire', {
 module.exports.User = db.model('users', {
     username: String,
     password: String,
-    keygen: String,
+    session: String,
 });
 
