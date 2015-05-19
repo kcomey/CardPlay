@@ -112,7 +112,7 @@ describe('Solitaire', function() {
     var d = game.shuffleDeck();
     expect(d).to.not.be.null;
     expect(d.length).to.equal(52);
-  })
+  });
 
   it('will generate a shuffled deck if passed shuffled', function() {
     var d = game.createDeck('shuffled');
