@@ -132,6 +132,22 @@ describe('Solitaire', function() {
     expect(g.stacks[6].visible[0]).to.equal(14);
   });
 
+  it('moves a chain of cards up from the right', function() {
+    var g = game.create({deck: 'chain'});
+    var g2 = actions.move(14, 6, 5, g);
+    expect(g2).to.not.be.null;
+    var g3 = actions.move( 2, 5, 4, g);
+    expect(g3).to.not.be.null;
+    var g4 = actions.move(16, 4, 3, g);
+    expect(g4).to.not.be.null;
+    var g5 = actions.move( 4, 3, 2, g);
+    expect(g5).to.not.be.null;
+    var g6 = actions.move(18, 2, 1, g);
+    expect(g6).to.not.be.null;
+    var g7 = actions.move( 6, 1, 0, g);
+    expect(g7).to.not.be.null;
+  });
+
   it('generates valid games with valid stacks', function() {
     var g = game.create({deck: 'unshuffled'});
 
