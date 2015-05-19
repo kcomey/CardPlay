@@ -31,8 +31,12 @@ exports.move = function(card, fromStack, toStack, game) {
     var newGame = solitaire.cloneGame(game);
 
     if (fromStack === 'draw') {
+      if (card !== newGame.stacks.draw[0]) {
+        return null;
+      }
     newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
     newGame.stacks.draw = newGame.stacks.draw.slice(1);
+
     } else if (typeof fromStack === 'number') {
       var fromLength = newGame.stacks[fromStack].visible.length;
       var index = newGame.stacks[fromStack].visible.indexOf(card) + 1;
@@ -46,9 +50,9 @@ exports.move = function(card, fromStack, toStack, game) {
           .visible.slice(0, index);
       }
       if (newGame.stacks[fromStack].visible.length === 0) {
-      return this.reveal(fromStack, newGame);
+        return this.reveal(fromStack, newGame);
       } else {
-      return newGame;
+        return newGame;
       }
     }
     return newGame;

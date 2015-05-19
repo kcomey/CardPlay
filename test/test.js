@@ -101,6 +101,13 @@ describe('Solitaire', function() {
     expect(g3.stacks[3].visible.length).to.equal(2);
   });
 
+  it('move card #30 from draw to stack 2', function() {
+    var g = game.create({deck: 'chain'});
+    var g2 = actions.draw(g);
+    var g3 = actions.move(30, 'draw', 2, g2);
+    expect(g3).to.be.null;
+  });
+
   it('should return a randomized deck of length 52', function() {
     var d = game.shuffleDeck();
     expect(d).to.not.be.null;
