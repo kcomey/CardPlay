@@ -112,7 +112,7 @@ describe('Solitaire', function() {
     var d = game.shuffleDeck();
     expect(d).to.not.be.null;
     expect(d.length).to.equal(52);
-  })
+  });
 
   it('will generate a shuffled deck if passed shuffled', function() {
     var d = game.createDeck('shuffled');
@@ -176,7 +176,7 @@ describe('Solitaire', function() {
   it('if options.deck is easy, should return game with one card left', function() {
     var g = game.create({deck: 'easy'});
     expect(g.stacks[0].visible[0]).to.equal(52);
-    expect(g.stacks['hearts'].length).to.equal(12);
+    expect(g.stacks.hearts.length).to.equal(12);
   });
 
   it('if we promote last card, the game is done', function() {

@@ -21,7 +21,7 @@ exports.shuffleDeck = function() {
     deck[i] = t;
   }
   return deck;
-}
+};
 
 exports.createDeck = function(kind) {
   if (kind === 'shuffled') {
@@ -42,7 +42,7 @@ exports.createDeck = function(kind) {
   27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
   40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52];
   }
-}
+};
 
 exports.create = function(options) {
   options = options || {};
@@ -76,10 +76,10 @@ exports.create = function(options) {
 
   if (options.deck === 'easy') {
     game.deck = [];
-    game.stacks['clubs'] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].reverse();
-    game.stacks['diamonds'] = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26].reverse();
-    game.stacks['spades'] = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39].reverse();
-    game.stacks['hearts'] = [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51].reverse();
+    game.stacks.clubs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].reverse();
+    game.stacks.diamonds = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26].reverse();
+    game.stacks.spades = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39].reverse();
+    game.stacks.hearts = [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51].reverse();
     game.stacks[0].visible = [52];
     return game;
   }
@@ -95,7 +95,7 @@ exports.create = function(options) {
   }
 
   return game;
-}
+};
 
 exports.getRank = function(card) {
   var rank = card % 13;
@@ -105,7 +105,7 @@ exports.getRank = function(card) {
   } else {
     return rank;
   }
-}
+};
 
 exports.getSuit = function(card) {
   if ( 1 <= card && card <= 13) { return "clubs"; }
@@ -113,7 +113,7 @@ exports.getSuit = function(card) {
   else if (27 <= card && card <= 39) { return "spades"; }
   else if (40 <= card && card <= 52) { return "hearts"; }
   return null;
-}
+};
 
 exports.getColor = function(card) {
   if ( 1 <= card && card <= 13) { return "black"; }
@@ -121,7 +121,7 @@ exports.getColor = function(card) {
   else if (27 <= card && card <= 39) { return "black"; }
   else if (40 <= card && card <= 52) { return "red"; }
   return null;
-}
+};
 
 exports.validMove = function(game, card, from, to) {
   if (to >= 0 && to <= 6) {
@@ -134,7 +134,7 @@ exports.validMove = function(game, card, from, to) {
       return false;
     }
 
-    var aboveCard = game.stacks[to].visible[0]
+    var aboveCard = game.stacks[to].visible[0];
     if (this.getRank(card) !== this.getRank(aboveCard) - 1) {
       return false;
     }
@@ -147,7 +147,7 @@ exports.validMove = function(game, card, from, to) {
 
 
   } else { return false; }
-}
+};
 
 exports.cloneStacks = function(stacks) {
   return {
@@ -164,7 +164,7 @@ exports.cloneStacks = function(stacks) {
     5: stacks[5],
     6: stacks[6]
   };
-}
+};
 
 exports.cloneGame = function(game) {
   return {
@@ -172,8 +172,8 @@ exports.cloneGame = function(game) {
     deck: game.deck,
     stacks: this.cloneStacks(game.stacks)
   };
-}
+};
 
 exports.validate = function(game) {
   return true;
-}
+};
