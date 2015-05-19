@@ -144,7 +144,7 @@ describe('Solitaire', function() {
     expect(g5).to.not.be.null;
     var g6 = actions.move(18, 2, 1, g5);
     expect(g6).to.not.be.null;
-    var g7 = actions.move( 6, 1, 0, g6);
+    var g7 = actions.move( 4, 1, 0, g6);
     expect(g7).to.not.be.null;
   });
 
@@ -162,7 +162,7 @@ describe('Solitaire', function() {
     var g = game.create({deck: 'unshuffled'});
     var g2 = actions.move(14, 2, 6, g);
     expect(g2).to.not.be.null;
-    expect(g2.stacks[2].visible.length).to.equal(0);
+    expect(g2.stacks[2].visible.length).to.equal(1);
     expect(g2.stacks[6].visible.length).to.equal(2);
   });
 });
