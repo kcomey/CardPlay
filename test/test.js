@@ -106,4 +106,19 @@ describe('Solitaire', function() {
     expect(d).to.not.be.null;
     expect(d.length).to.equal(52);
   })
+
+  it('will generate a shuffled deck if passed shuffled', function() {
+    var d = game.createDeck('shuffled');
+    var d2 = game.createDeck('shuffled');
+    expect(d).to.not.eql(d2);
+    expect(d).to.not.equal(d2);
+  });
+
+  it('pass unshuffled deck, then it should always be the same', function() {
+    var d = game.createDeck('unshuffled');
+    var d2 = game.createDeck('unshuffled');
+    expect(d).to.eql(d2);
+    expect(d).to.not.equal(d2);
+  });
+
 });
