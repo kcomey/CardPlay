@@ -136,15 +136,15 @@ describe('Solitaire', function() {
     var g = game.create({deck: 'chain'});
     var g2 = actions.move(14, 6, 5, g);
     expect(g2).to.not.be.null;
-    var g3 = actions.move( 2, 5, 4, g);
+    var g3 = actions.move( 2, 5, 4, g2);
     expect(g3).to.not.be.null;
-    var g4 = actions.move(16, 4, 3, g);
+    var g4 = actions.move(16, 4, 3, g3);
     expect(g4).to.not.be.null;
-    var g5 = actions.move( 4, 3, 2, g);
+    var g5 = actions.move( 4, 3, 2, g4);
     expect(g5).to.not.be.null;
-    var g6 = actions.move(18, 2, 1, g);
+    var g6 = actions.move(18, 2, 1, g5);
     expect(g6).to.not.be.null;
-    var g7 = actions.move( 6, 1, 0, g);
+    var g7 = actions.move( 6, 1, 0, g6);
     expect(g7).to.not.be.null;
   });
 
