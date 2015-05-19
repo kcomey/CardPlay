@@ -130,4 +130,12 @@ describe('Solitaire', function() {
     }
     expect(g.deck.length).to.equal(24);
   });
+
+  it('should move card 14(2) onto card 28(6)', function() {
+    var g = game.create({deck: 'unshuffled'});
+    var g2 = actions.move(14, 2, 6, g);
+    expect(g2).to.not.be.null;
+    expect(g2.stacks[2].visible.length).to.equal(0);
+    expect(g2.stacks[6].visible.length).to.equal(2);
+  });
 });
