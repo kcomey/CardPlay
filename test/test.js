@@ -172,4 +172,18 @@ describe('Solitaire', function() {
     expect(g2.stacks[2].visible.length).to.equal(1);
     expect(g2.stacks[6].visible.length).to.equal(2);
   });
+
+  it('if options.deck is easy, should return game with one card left', function() {
+    var g = game.create({deck: 'easy'});
+    expect(g.stacks[0].visible[0]).to.equal(52);
+    expect(g.stacks['hearts'].length).to.equal(12);
+  });
+
+  it('if we promote last card, the game is done', function() {
+    var g = game.create({deck: 'easy'});
+    var g2 = actions.promote(52, 0, g);
+    expect(g.done === undefined);
+    expect(g2.done === true);
+  });
+
 });
