@@ -121,4 +121,13 @@ describe('Solitaire', function() {
     expect(d).to.not.equal(d2);
   });
 
+  it('generates valid games with valid stacks', function() {
+    var g = game.create({deck: 'unshuffled'});
+
+    for (var i = 0; i < 7; i++) {
+      expect(g.stacks[i].visible.length).to.equal(1);
+      expect(g.stacks[i].hidden.length).to.equal(i);
+    }
+    expect(g.deck.length).to.equal(24);
+  });
 });
