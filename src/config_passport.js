@@ -24,7 +24,6 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('id is ' + id);
     mongo.User.findOne({ _id: id },function(err, user) {
     done(err, user);
   });

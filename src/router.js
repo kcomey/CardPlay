@@ -4,11 +4,16 @@ var passport = require('passport');
 var authenticateUser = require('./authenticate.js');
 require('./config_passport')(passport);
 var game = require('./solitaire/game.js');
+var session = require('express-session');
+var mongo = require('./mongoose.js');
 
 module.exports = function router(app) {
 
+app.use(session({resave: true, secret: 'codefellows',
+  saveUninitialized: true}));
+
 app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.session());
 // This is middleware
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
@@ -24,31 +29,20 @@ app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res, next) {
     // User has successfully logged in here, send wherever you want them to go
-    authenticateUser.setCookie(req, res, next);
+    authenticateUser.setSession(req, res, next);
+    res.status(200).send('User is logged in');
   });
 
-app.route('/')
-  app.get('/solitaire/newgame', function(req, res) {
-    var newGame = game.create();
-    var gameID = newGame.options.id;
-    res.redirect('/game/' + gameID)
-  })
-  app.post('/draw', function(req, res) {
-  // Send to draw function
-  })
-  app.post('/flip', function(req, res) {
-  // Send to flip function
-  })
-  app.post('/move', function(req, res) {
-  // Send to move function
-  })
-  app.post('/promote', function(req, res) {
-  // Send to promote function
-  })
-  app.post('/unpromote', function(req, res) {
-  // Send to unpromote function
-  })
-  app.post('/reveal', function(req, res) {
-  // Send to reveal function
-  });
+app.get('/solitaire/newgame', function(req, res) {
+  var newGame = game.create();
+  var gameID = newGame.options.id;
+  authenticateUser.saveState(gameID, newGame);
+  res.redirect('/solitaire/game/' + gameID);
+});
+
+app.get('/solitaire/game/:gameID', function(req, res) {
+  authenticateUser.getState(req.params.gameID);
+});
+
 };
+
