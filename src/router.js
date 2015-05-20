@@ -23,6 +23,7 @@ app.use(function (req, res, next) {
 app.get('/login', function(req, res) {
   // Authenticate the user here
   console.log('This will be where the user can login');
+  // add response
 });
 
 app.post('/login',
@@ -41,7 +42,7 @@ app.get('/solitaire/newgame', function(req, res) {
 });
 
 app.get('/solitaire/game/:gameID', function(req, res) {
-  authenticateUser.getState(req.params.gameID);
+  authenticateUser.getState(req, res, req.params.gameID);
 });
 
 };
