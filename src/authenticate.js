@@ -27,25 +27,25 @@ exports.getState = function(req, res, gameID) {
     if (err) {
       res.status(404).send('Game not found');
     }
-    console.dir(game);
-    console.log('thats the game');
-    console.dir(gameID);
-    res.status(200).send(game);
+    var form = '<form action="/solitaire/game/' + gameID + '" method="post">';
+    form += '<br>Username: <input type="text" name="user" value="Username">';
+    form += '<br>Password: <input type="password" name="pass">';
+    form += '<br><input type="submit" name="login" value="Log In">';
+    form += '</form>\n';
+    res.status(200).send(form + game);
   });
 };
 
-exports.setSession = function(req, res, next) {
+exports.setSession = function(req, res, callback) {
   var userKey = keygen.url(keygen.medium);
   // Write the keygen to the user file to check later
-  mongo.User.findOneAndUpdate({username: req.body.username}, {session: userKey}, {new: true},
+  mongo.User.findOneAndUpdate({username: req.body.username}, {session: userKey},
+    {new: true},
     function(err, result) {
-      if (err) {
-        return err;
-      };
+      callback(err, userKey);
     }
   )
-  req.session.token = userKey;
-}
+};
 
 exports.isAuthenticated = function(req, res, next) {
   // If they are just logging in they don't need to be authenticated yet

@@ -29,9 +29,17 @@ app.get('/login', function(req, res) {
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res, next) {
+    console.log('user is logged in');
     // User has successfully logged in here, send wherever you want them to go
-    authenticateUser.setSession(req, res, next);
-    res.status(200).send('User is logged in');
+    authenticateUser.setSession(req, res, function(err, sessionID) {
+      console.log('session id is ' + sessionID);
+      if (err) {
+        res.status(500).send('Could not establish session');
+      } else {
+        res.status(200).send('User is logged in');
+        req.session.token = sessionID;
+      }
+    });
   });
 
 app.get('/solitaire/newgame', function(req, res) {
@@ -44,6 +52,8 @@ app.get('/solitaire/newgame', function(req, res) {
 app.get('/solitaire/game/:gameID', function(req, res) {
   authenticateUser.getState(req, res, req.params.gameID);
 });
+
+
 
 };
 
