@@ -1,6 +1,5 @@
 var mongo = require('./mongoose.js');
 var keygen = require('keygen');
-var cookieParser = require('cookie-parser');
 
 exports.saveState = function(gameID, game) {
   var key = game.options.id;
@@ -23,6 +22,7 @@ exports.saveState = function(gameID, game) {
 };
 
 exports.getState = function(req, res, gameID) {
+  console.log('getState: ', gameID);
   mongo.Solitaire.findOne({ "options.id": gameID }, function (err, game) {
     if (err) {
       res.status(404).send('Game not found');
@@ -50,7 +50,10 @@ exports.setSession = function(req, res, callback) {
 exports.isAuthenticated = function(req, res, next) {
   // If they are just logging in they don't need to be authenticated yet
   if (req.path === '/login') return next();
-   var token = req.session.token;
+   // var token = req.session.token;
+   var token = req.cookies.session;
+   console.log(token);
+   console.log('thats the token');
    mongo.User.findOne({ session: token },function(err, user) {
       console.log('user is ' + user);
       if (err) {
