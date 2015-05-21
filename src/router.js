@@ -73,8 +73,21 @@ app.get('/solitaire/game/:gameID', function(req, res) {
       res.status(404).send('Could not find game');
     } else {
       var form = '<form action="/solitaire/game/' + req.params.gameID + '" method="post">';
-      form += '<br>move: <input type="text" name="move" value="draw">';
-      form += '<br><input type="submit" name="login" value="Log In">';
+      form += '<br><input type="text" name="cardID" value="Which Card">';
+      form += '<p>move from: <select name="movefrom"><option value="drawpile">Draw Pile</option><option value="0">0</option>';
+      form += '<option value="1">1</option><option value="2">2</option>';
+      form += '<option value="3">3</option><option value="4">4</option>';
+      form += '<option value="5">5</option><option value="6">6</option></select>';
+      form += '&nbsp;move to: <select name="moveto">';
+       form += '<option value="0">0</option>';
+      form += '<option value="1">1</option><option value="2">2</option>';
+      form += '<option value="3">3</option><option value="4">4</option>';
+      form += '<option value="5">5</option><option value="6">6</option></select>';
+      form += '<p>Select Action: <select name="action">';
+      form += '<option value="draw">Draw</option><option value="flip">Flip</option>';
+      form += '<option value="move">Move</option><option value="reveal">Reveal</option>';
+      form += '<option value="promote">Promote</option><option value="unpromote">Unpromote</option></select>';
+      form += '<p><input type="submit" name="login" value="Submit Action">';
       form += '</form>\n';
       res.status(200).send(form + game);
     }
@@ -87,7 +100,7 @@ app.post('/solitaire/game/:gameID', function(req, res) {
       res.status(404).send('Game does not exist');
       return;
     }
-    switch (req.body.move) {
+    switch (req.body.action) {
         case "draw":
           var newGame = actions.draw(returnGame);
           if (newGame) {
