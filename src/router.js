@@ -112,7 +112,7 @@ app.post('/solitaire/game/:gameID', function(req, res) {
               }
             })
           } else {
-            // send 400
+              res.status(400);
           }
           break;
 
@@ -120,6 +120,18 @@ app.post('/solitaire/game/:gameID', function(req, res) {
           break;
 
         case "flip":
+          var newGame = actions.flip(returnGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+              res.status(400);
+          }
           break;
 
 
