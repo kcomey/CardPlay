@@ -61,9 +61,11 @@ app.get('/solitaire/newgame', function(req, res) {
     var unshuffled = { "deck": "unshuffled"};
     var newGame = game.create(unshuffled);
   } else if (req.query.key === "special") {
-    console.log('getting here?');
     var special = { "deck": "special"};
     var newGame = game.create(special);
+  } else if (req.query.key === "chain") {
+    var chain = { "deck": "chain"};
+    var newGame = game.create(chain);
   } else {
     var newGame = game.create();
   }
@@ -174,6 +176,21 @@ app.post('/solitaire/game/:gameID', function(req, res) {
 
           case "unpromote":
           var newGame = actions.unpromote(req.body.cardID, req.body.movefrom, returnGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
+          }
+          break;
+
+          case "move":
+          var newGame = actions.move(req.body.cardID, req.body.movefrom, req.body.moveto, returnGame);
           if (newGame) {
             authenticateUser.saveState(newGame, function(err, result) {
               if (err) {
