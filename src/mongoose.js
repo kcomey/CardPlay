@@ -8,7 +8,7 @@ module.exports.Solitaire = db.model('solitaire', {
       "game": String,
       "id": String,
      },
-    "deck": String,
+    "deck": Array,
     "stacks": {
       "draw": Array,
       "clubs": Array,

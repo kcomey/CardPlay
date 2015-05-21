@@ -9,7 +9,7 @@ exports.saveState = function(game, callback) {
 };
 
 exports.getState = function(gameID, callback) {
-  mongo.Solitaire.findOne({ "options.id": gameID }, callback);
+  mongo.Solitaire.findOne({ "options.id": gameID }).lean().exec(callback);
 };
 
 exports.setSession = function(req, res, callback) {
