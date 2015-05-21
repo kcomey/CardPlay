@@ -15,13 +15,13 @@ module.exports.Solitaire = db.model('solitaire', {
       "diamonds": Array,
       "spades": Array,
       "hearts": Array,
-      0: { "visible": Array, "hidden": Array },
-      1: { "visible": Array, "hidden": Array },
-      2: { "visible": Array, "hidden": Array },
-      3: { "visible": Array, "hidden": Array },
-      4: { "visible": Array, "hidden": Array },
-      5: { "visible": Array, "hidden": Array },
-      6: { "visible": Array, "hidden": Array },
+      "0": { "visible": Array, "hidden": Array },
+      "1": { "visible": Array, "hidden": Array },
+      "2": { "visible": Array, "hidden": Array },
+      "3": { "visible": Array, "hidden": Array },
+      "4": { "visible": Array, "hidden": Array },
+      "5": { "visible": Array, "hidden": Array },
+      "6": { "visible": Array, "hidden": Array },
     }
 });
 

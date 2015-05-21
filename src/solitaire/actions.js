@@ -26,6 +26,9 @@ exports.flip = function(game) {
 };
 
 exports.move = function(card, fromStack, toStack, game) {
+  if (typeof card !== 'number') {
+    card = Number(card);
+  }
   var suit = solitaire.getSuit(card);
   if (solitaire.validMove(game, card, suit, toStack)) {
     var newGame = solitaire.cloneGame(game);
@@ -37,7 +40,8 @@ exports.move = function(card, fromStack, toStack, game) {
     newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
     newGame.stacks.draw = newGame.stacks.draw.slice(1);
 
-    } else if (typeof fromStack === 'number') {
+    } else {
+      console.log('getting to line 41');
       var fromLength = newGame.stacks[fromStack].visible.length;
       var index = newGame.stacks[fromStack].visible.indexOf(card) + 1;
       if (fromLength === 1) {
@@ -45,9 +49,9 @@ exports.move = function(card, fromStack, toStack, game) {
         newGame.stacks[fromStack].visible = newGame.stacks[fromStack].visible.slice(1);
       } if (fromLength > 1) {
         newGame.stacks[toStack].visible = newGame.stacks[fromStack].visible
-          .concat(newGame.stacks[toStack].visible);
+          .slice(0, index).concat(newGame.stacks[toStack].visible);
         newGame.stacks[fromStack].visible = newGame.stacks[fromStack]
-          .visible.slice(0, index);
+          .visible.slice(index);
       }
       if (newGame.stacks[fromStack].visible.length === 0) {
         return this.reveal(fromStack, newGame);
@@ -55,14 +59,14 @@ exports.move = function(card, fromStack, toStack, game) {
         return newGame;
       }
     }
-    return newGame;
-
   }
-
   return null;
 };
 
 exports.promote = function(card, fromStack, game) {
+  if (typeof card !== 'number') {
+    card = Number(card);
+  }
   if (fromStack === 'clubs' || fromStack === 'diamonds' ||
     fromStack === 'spades' || fromStack === 'hearts') {
     return null;
@@ -86,11 +90,14 @@ exports.promote = function(card, fromStack, game) {
 };
 
 exports.unpromote = function(card, toStack, game) {
+  if (typeof card !== 'number') {
+    card = Number(card);
+  }
   var suit = solitaire.getSuit(card);
   if (solitaire.validMove(game, card, suit, toStack)) {
     var newGame = solitaire.cloneGame(game);
 
-    newGame.stacks[toStack] = [card].concat(newGame.stacks[toStack]);
+    newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
     newGame.stacks[suit] = newGame.stacks[suit].slice(1);
 
     return newGame;

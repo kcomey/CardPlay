@@ -57,7 +57,18 @@ app.post('/login',
   });
 
 app.get('/solitaire/newgame', function(req, res) {
-  var newGame = game.create();
+  if (req.query.key === "un") {
+    var unshuffled = { "deck": "unshuffled"};
+    var newGame = game.create(unshuffled);
+  } else if (req.query.key === "special") {
+    var special = { "deck": "special"};
+    var newGame = game.create(special);
+  } else if (req.query.key === "chain") {
+    var chain = { "deck": "chain"};
+    var newGame = game.create(chain);
+  } else {
+    var newGame = game.create();
+  }
   authenticateUser.saveState(newGame, function(err, game) {
     if (err) {
       res.status(500).send('Could not create a new game');
@@ -73,8 +84,21 @@ app.get('/solitaire/game/:gameID', function(req, res) {
       res.status(404).send('Could not find game');
     } else {
       var form = '<form action="/solitaire/game/' + req.params.gameID + '" method="post">';
-      form += '<br>move: <input type="text" name="move" value="draw">';
-      form += '<br><input type="submit" name="login" value="Log In">';
+      form += '<br><input type="text" name="cardID" value="">';
+      form += '<p>move from: <select name="movefrom"><option value="drawpile">Draw Pile</option><option value="0">0</option>';
+      form += '<option value="1">1</option><option value="2">2</option>';
+      form += '<option value="3">3</option><option value="4">4</option>';
+      form += '<option value="5">5</option><option value="6">6</option></select>';
+      form += '&nbsp;move to: <select name="moveto">';
+       form += '<option value="0">0</option>';
+      form += '<option value="1">1</option><option value="2">2</option>';
+      form += '<option value="3">3</option><option value="4">4</option>';
+      form += '<option value="5">5</option><option value="6">6</option></select>';
+      form += '<p>Select Action: <select name="action">';
+      form += '<option value="draw">Draw</option><option value="flip">Flip</option>';
+      form += '<option value="move">Move</option><option value="reveal">Reveal</option>';
+      form += '<option value="promote">Promote</option><option value="unpromote">Unpromote</option></select>';
+      form += '<p><input type="submit" name="login" value="Submit Action">';
       form += '</form>\n';
       res.status(200).send(form + JSON.stringify(game));
     }
@@ -87,7 +111,7 @@ app.post('/solitaire/game/:gameID', function(req, res) {
       res.status(404).send('Game does not exist');
       return;
     }
-    switch (req.body.move) {
+    switch (req.body.action) {
         case "draw":
           var newGame = actions.draw(returnGame);
           if (newGame) {
@@ -103,10 +127,81 @@ app.post('/solitaire/game/:gameID', function(req, res) {
           }
           break;
 
-        case "move":
+        case "promote":
+        //card, from, game
+          var newGame = actions.promote(req.body.cardID, req.body.movefrom,returnGame);
+          console.log(newGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
+          }
           break;
 
         case "flip":
+          var newGame = actions.flip(returnGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
+          }
+          break;
+
+          case "reveal":
+          var newGame = actions.reveal(req.body.movefrom, returnGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
+          }
+          break;
+
+          case "unpromote":
+          var newGame = actions.unpromote(req.body.cardID, req.body.movefrom, returnGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
+          }
+          break;
+
+          case "move":
+          var newGame = actions.move(req.body.cardID, req.body.movefrom, req.body.moveto, returnGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
+          }
           break;
 
 
