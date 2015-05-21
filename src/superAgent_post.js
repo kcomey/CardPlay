@@ -5,7 +5,7 @@ var request = require('superagent');
 
 request
   .post('http://localhost:3000/login')
-  .send({ username: "Kendall", password: "Lucky7" })
+  .send({ username: 'Kendall', password: 'Lucky7' })
   .set('Accept', 'application/json')
   .end(function(err, res) {
   });

@@ -49,10 +49,8 @@ module.exports = function router(app) {
       failureRedirect: '/login',
     }),
     function(req, res, next) {
-      console.log('user is logged in');
       // User has successfully logged in here, send wherever you want them to go
       authenticateUser.setSession(req, res, function(err, sessionID) {
-        console.log('session id is ' + sessionID);
         if (err) {
           res.status(500).send('Could not establish session');
         } else {
@@ -154,7 +152,6 @@ module.exports = function router(app) {
         case 'promote': {
           newGame = actions.promote(req.body.cardID, req.body.movefrom,
             returnGame);
-          console.log(newGame);
           if (newGame) {
             authenticateUser.saveState(newGame, function(err, result) {
               if (err) {

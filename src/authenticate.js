@@ -34,7 +34,6 @@ exports.isAuthenticated = function(req, res, next) {
     return;
   }
   mongo.User.findOne({ session: token }, function(err, user) {
-    console.log('user is ' + user);
     if (err) {
       return err;
     }
