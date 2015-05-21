@@ -62,7 +62,7 @@ app.get('/solitaire/newgame', function(req, res) {
     if (err) {
       res.status(500).send('Could not create a new game');
     } else {
-      res.redirect('/solitaire/game/' + gameID);
+      res.redirect('/solitaire/game/' + game.options.id);
     }
   });
 });
