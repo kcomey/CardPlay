@@ -89,7 +89,7 @@ app.get('/solitaire/game/:gameID', function(req, res) {
       form += '<option value="promote">Promote</option><option value="unpromote">Unpromote</option></select>';
       form += '<p><input type="submit" name="login" value="Submit Action">';
       form += '</form>\n';
-      res.status(200).send(form + game);
+      res.status(200).send(form + JSON.stringify(game));
     }
   });
 });
@@ -104,7 +104,7 @@ app.post('/solitaire/game/:gameID', function(req, res) {
         case "draw":
           var newGame = actions.draw(returnGame);
           if (newGame) {
-            authenticateUser.saveState(game, function(err, result) {
+            authenticateUser.saveState(newGame, function(err, result) {
               if (err) {
                 res.status(500).send('Could not save to database');
               } else {
