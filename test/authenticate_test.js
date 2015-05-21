@@ -53,7 +53,7 @@ describe('Tests to check Passport authenication and x-api-keys', function() {
       .get('/solitaire/newgame')
       .redirects(0)
       .end(function(err, res) {
-        expect(res).to.redirectTo('/login')
+        expect(res).to.redirectTo('/login');
         done();
       });
   });
