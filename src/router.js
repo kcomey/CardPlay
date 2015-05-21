@@ -98,6 +98,8 @@ app.post('/solitaire/game/:gameID', function(req, res) {
                 res.redirect('/solitaire/game/' + req.params.gameID);
               }
             })
+          } else { // Invalid action, can't draw on an empty deck
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
           }
           break;
 
