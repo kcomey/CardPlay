@@ -68,22 +68,23 @@ describe('The API responds to GETs & POSTs', function() {
     });
   });
 
-  // it('should be able to create new games', function(done) {
-  //   var gameURL;
-  //   agent
-  //     .get('/solitaire/newgame')
-  //     .then(function(res) {
-  //       gameURL = res.location;
-  //     })
-  //     .post(gameURL)
-  //     .send({ action: "draw" })
-  //     .end(function(err, res) {
-  //       if (err) { return err; }
-  //       expect(res).to.have.status(200);
-  //       done();
-  //     });
-  // });
-
+  it('should be able to create new games', function(done) {
+    var gameURL;
+    agent.get('/solitaire/newgame').then(function(res) {
+      return agent
+        .post(res.req.path)
+        .send({
+          action: "draw"
+        })
+        .end(function(err, res) {
+          if (err) {
+            return err;
+          }
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+});
   // it('', function(done) {
   //   agent.get('/solitaire/newgame').redirects(0).end(function(err, res) {
   //     expect(res).to.have.status(302);
