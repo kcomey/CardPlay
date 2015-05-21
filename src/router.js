@@ -111,6 +111,8 @@ app.post('/solitaire/game/:gameID', function(req, res) {
                 res.redirect('/solitaire/game/' + req.params.gameID);
               }
             })
+          } else {
+            // send 400
           }
           break;
 
