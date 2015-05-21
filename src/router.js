@@ -60,8 +60,11 @@ app.get('/solitaire/newgame', function(req, res) {
   if (req.query.key === "un") {
     var unshuffled = { "deck": "unshuffled"};
     var newGame = game.create(unshuffled);
-  }
-  else {
+  } else if (req.query.key === "special") {
+    console.log('getting here?');
+    var special = { "deck": "special"};
+    var newGame = game.create(special);
+  } else {
     var newGame = game.create();
   }
   authenticateUser.saveState(newGame, function(err, game) {
@@ -135,7 +138,7 @@ app.post('/solitaire/game/:gameID', function(req, res) {
               }
             })
           } else {
-              res.status(400);
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
           }
           break;
 
@@ -150,7 +153,37 @@ app.post('/solitaire/game/:gameID', function(req, res) {
               }
             })
           } else {
-              res.status(400);
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
+          }
+          break;
+
+          case "reveal":
+          var newGame = actions.reveal(req.body.movefrom, returnGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
+          }
+          break;
+
+          case "unpromote":
+          var newGame = actions.unpromote(req.body.cardID, req.body.movefrom, returnGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+            res.status(400).send('<img src="http://httpcats.herokuapp.com/400">\n');
           }
           break;
 

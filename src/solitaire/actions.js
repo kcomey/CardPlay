@@ -89,11 +89,14 @@ exports.promote = function(card, fromStack, game) {
 };
 
 exports.unpromote = function(card, toStack, game) {
+  if (typeof card !== 'number') {
+    card = Number(card);
+  }
   var suit = solitaire.getSuit(card);
   if (solitaire.validMove(game, card, suit, toStack)) {
     var newGame = solitaire.cloneGame(game);
 
-    newGame.stacks[toStack] = [card].concat(newGame.stacks[toStack]);
+    newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
     newGame.stacks[suit] = newGame.stacks[suit].slice(1);
 
     return newGame;
