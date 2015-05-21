@@ -7,6 +7,4 @@ app.use(morgan('dev'));
 
 router(app);
 
-app.listen(process.env.PORT || 3000, function() {
-  console.log('server started');
-});
+module.exports = app;
