@@ -37,7 +37,8 @@ exports.move = function(card, fromStack, toStack, game) {
       if (card !== newGame.stacks.draw[0]) {
         return null;
       }
-      newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
+      newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack]
+        .visible);
       newGame.stacks.draw = newGame.stacks.draw.slice(1);
 
       return newGame;
@@ -45,8 +46,10 @@ exports.move = function(card, fromStack, toStack, game) {
       var fromLength = newGame.stacks[fromStack].visible.length;
       var index = newGame.stacks[fromStack].visible.indexOf(card) + 1;
       if (fromLength === 1) {
-        newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
-        newGame.stacks[fromStack].visible = newGame.stacks[fromStack].visible.slice(1);
+        newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack]
+          .visible);
+        newGame.stacks[fromStack].visible = newGame.stacks[fromStack].visible
+          .slice(1);
       }
       if (fromLength > 1) {
         newGame.stacks[toStack].visible = newGame.stacks[fromStack].visible
@@ -80,8 +83,12 @@ exports.promote = function(card, fromStack, game) {
     newGame.stacks[suit] = [card].concat(game.stacks[suit]);
     newGame.stacks.draw = newGame.stacks.draw.slice(1);
   } else {
-    if (game.stacks[fromStack].visible.length === 0) { return null; }
-    if (game.stacks[fromStack].visible[0] !== card) { return null; }
+    if (game.stacks[fromStack].visible.length === 0) {
+      return null;
+    }
+    if (game.stacks[fromStack].visible[0] !== card) {
+      return null;
+    }
 
     newGame.stacks[suit] = [card].concat(game.stacks[suit]);
     newGame.stacks[fromStack].visible = game.stacks[fromStack].visible.slice(1);
@@ -98,7 +105,8 @@ exports.unpromote = function(card, toStack, game) {
   if (solitaire.validMove(game, card, suit, toStack)) {
     var newGame = solitaire.cloneGame(game);
 
-    newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack].visible);
+    newGame.stacks[toStack].visible = [card].concat(newGame.stacks[toStack]
+      .visible);
     newGame.stacks[suit] = newGame.stacks[suit].slice(1);
 
     return newGame;
