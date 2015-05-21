@@ -48,12 +48,12 @@ describe('Tests to check Passport authenication and x-api-keys', function() {
       });
   });
 
-  it('should redirect to /login if you start a newgame', function(done) {
+  it('should redirect to /login if you start a newgame w/o logging in', function(done) {
     chai.request(app)
       .get('/solitaire/newgame')
       .redirects(0)
       .end(function(err, res) {
-        expect(res).to.redirectTo('/login')
+        expect(res).to.redirectTo('/login');
         done();
       });
   });
