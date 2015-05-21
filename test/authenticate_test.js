@@ -7,25 +7,28 @@ var expect = chai.expect;
 var mongo = require('../src/mongoose.js');
 
 describe('Tests to check Passport authenication and x-api-keys', function() {
-  before(function(done) {
+  it('should send the user to a login page', function(done) {
+    var form = '<form action="/login" method="post">';
+        form += '<br>Username: <input type="text" name="username" value="Username">';
+        form += '<br>Password: <input type="password" name="password">';
+        form += '<br><input type="submit" name="login" value="Log In">';
+        form += '</form>\n';
 
-  var user = { username: 'Roger', password: "MadMen" }
-    mongo.User.populate(user, function (err, user) {
-    console.log(user.username) // whip
-  })
-
+    chai.request('http://localhost:3000')
+      .get('/login')
+      .end(function(err, res) {
+        expect(res.text).to.eql(form);
+        expect(res).to.have.status(200);
+        done();
+      });
   });
 
-  it('Expect login to return OK if credentials are valid',
-  function(done) {
-    chai.request(app)
-      .post('http://localhost:3000/login')
-      .send({ username: "Roger", password: "MadMen" })
-      .set('Accept', 'application/json')
+
+  it('should log in testUser and return User is logged in', function(done) {
+    chai.request('http://localhost:3000')
+      .post('/login')
+      .auth('daniel', 'esqueda')
       .end(function(err, res) {
-        if (err) {
-          throw err;
-        }
         expect(res).to.have.status(200);
         done();
       });
