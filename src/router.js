@@ -57,7 +57,13 @@ app.post('/login',
   });
 
 app.get('/solitaire/newgame', function(req, res) {
-  var newGame = game.create();
+  if (req.query.key === "un") {
+    var unshuffled = { "deck": "unshuffled"};
+    var newGame = game.create(unshuffled);
+  }
+  else {
+    var newGame = game.create();
+  }
   authenticateUser.saveState(newGame, function(err, game) {
     if (err) {
       res.status(500).send('Could not create a new game');
@@ -73,7 +79,7 @@ app.get('/solitaire/game/:gameID', function(req, res) {
       res.status(404).send('Could not find game');
     } else {
       var form = '<form action="/solitaire/game/' + req.params.gameID + '" method="post">';
-      form += '<br><input type="text" name="cardID" value="Which Card">';
+      form += '<br><input type="text" name="cardID" value="">';
       form += '<p>move from: <select name="movefrom"><option value="drawpile">Draw Pile</option><option value="0">0</option>';
       form += '<option value="1">1</option><option value="2">2</option>';
       form += '<option value="3">3</option><option value="4">4</option>';
@@ -116,7 +122,21 @@ app.post('/solitaire/game/:gameID', function(req, res) {
           }
           break;
 
-        case "move":
+        case "promote":
+        //card, from, game
+          var newGame = actions.promote(req.body.cardID, req.body.movefrom,returnGame);
+          console.log(newGame);
+          if (newGame) {
+            authenticateUser.saveState(newGame, function(err, result) {
+              if (err) {
+                res.status(500).send('Could not save to database');
+              } else {
+                res.redirect('/solitaire/game/' + req.params.gameID);
+              }
+            })
+          } else {
+              res.status(400);
+          }
           break;
 
         case "flip":

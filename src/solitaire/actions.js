@@ -63,6 +63,9 @@ exports.move = function(card, fromStack, toStack, game) {
 };
 
 exports.promote = function(card, fromStack, game) {
+  if (typeof card !== 'number') {
+    card = Number(card);
+  }
   if (fromStack === 'clubs' || fromStack === 'diamonds' ||
     fromStack === 'spades' || fromStack === 'hearts') {
     return null;
