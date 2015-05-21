@@ -119,7 +119,7 @@ module.exports = function router(app) {
         form += '<option value="move">Move</option><option value="reveal">';
         form += 'Reveal</option>';
         form += '<option value="promote">Promote</option><option value=';
-        fomr += '"unpromote">Unpromote</option></select>';
+        form += '"unpromote">Unpromote</option></select>';
         form += '<p><input type="submit" name="login" value="Submit Action">';
         form += '</form>\n';
         res.status(200).send(form + JSON.stringify(game));
