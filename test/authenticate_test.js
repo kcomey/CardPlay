@@ -52,12 +52,25 @@ describe('Tests to check Passport authenication and x-api-keys', function() {
   it('should log in testUser and return User is logged in', function(done) {
     chai.request(app)
       .post('/login')
-      .auth('daniel', 'esqueda')
+      .redirects(0)
+      .send({username: 'daniel', password: 'test'})
       .end(function(err, res) {
         expect(res).to.have.status(200);
         done();
       });
   });
+
+  it('should redirect to /login if user is not in database', function(done) {
+    chai.request(app)
+      .post('/login')
+      .redirects(0)
+      .send({username: 'tom', password: 'notgood'})
+      .end(function(err, res) {
+        expect(res).to.redirectTo('/login');
+        done();
+      });
+  });
+
 
 // End describe
 });
