@@ -9,6 +9,28 @@ var mongo = require('../src/mongoose.js');
 
 describe('Tests to check Passport authenication and x-api-keys', function() {
 
+  before(function(done) {
+    mongo.User.findOneAndUpdate({username: 'daniel'},
+      {username: 'daniel', password: 'test'},
+      {upsert: true},
+      function(err, doc) {
+        if (err) {
+          return err;
+        }
+        console.log('user daniel created');
+      });
+    done();
+  });
+
+  after(function(done) {
+    mongo.User.findOneAndRemove({username: 'daniel'}, function(err, doc) {
+      if (err) {
+        return err;
+      }
+      console.log('user daniel removed');
+    });
+    done();
+  });
 
   it('should send the user to a login page', function(done) {
     var form = '<form action="/login" method="post">';
