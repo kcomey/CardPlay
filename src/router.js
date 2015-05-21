@@ -135,7 +135,7 @@ module.exports = function router(app) {
         return;
       }
       switch (req.body.action) {
-        case draw: {
+        case 'draw': {
           newGame = actions.draw(returnGame);
           if (newGame) {
             authenticateUser.saveState(newGame, function(err, result) {
@@ -151,7 +151,7 @@ module.exports = function router(app) {
           }
           break;
         }
-        case promote: {
+        case 'promote': {
           newGame = actions.promote(req.body.cardID, req.body.movefrom,
             returnGame);
           console.log(newGame);
@@ -169,7 +169,7 @@ module.exports = function router(app) {
           }
           break;
         }
-        case flip: {
+        case 'flip': {
           newGame = actions.flip(returnGame);
           if (newGame) {
             authenticateUser.saveState(newGame, function(err, result) {
@@ -185,7 +185,7 @@ module.exports = function router(app) {
           }
           break;
         }
-        case reveal: {
+        case 'reveal': {
           newGame = actions.reveal(req.body.movefrom, returnGame);
           if (newGame) {
             authenticateUser.saveState(newGame, function(err, result) {
@@ -201,7 +201,7 @@ module.exports = function router(app) {
           }
           break;
         }
-        case unpromote: {
+        case 'unpromote': {
           newGame = actions.unpromote(req.body.cardID, req.body.movefrom,
             returnGame);
           if (newGame) {
@@ -219,7 +219,7 @@ module.exports = function router(app) {
           break;
         }
 
-        case move: {
+        case 'move': {
           newGame = actions.move(req.body.cardID, req.body.movefrom,
             req.body.moveto, returnGame);
           if (newGame) {
