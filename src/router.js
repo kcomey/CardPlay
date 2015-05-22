@@ -78,6 +78,11 @@ module.exports = function router(app) {
         deck: 'chain',
       };
       newGame = game.create(chain);
+    } else if (req.query.key === 'easy') {
+      var easy = {
+        deck: 'easy',
+      };
+      newGame = game.create(easy);
     } else {
       newGame = game.create();
     }
@@ -156,6 +161,9 @@ module.exports = function router(app) {
             authenticateUser.saveState(newGame, function(err, result) {
               if (err) {
                 res.status(500).send('Could not save to database');
+              } else if (newGame.options.won === true) {
+                res.send('<img src="https://www.theproducersperspective.com/' +
+                         'wp-content/uploads/2012/06/YouWin2.png">\n');
               } else {
                 res.redirect('/solitaire/game/' + req.params.gameID);
               }

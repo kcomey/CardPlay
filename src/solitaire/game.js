@@ -63,6 +63,7 @@ exports.create = function(options) {
       draw: drawSize,
       game: 'solitaire',
       id: keygen.hex(keygen.small),
+      won: false,
     },
     deck: deck,
     stacks: {
@@ -216,6 +217,15 @@ exports.cloneGame = function(game) {
     stacks: this.cloneStacks(game.stacks),
   };
 };
+
+exports.cardsLeft = function(game) {
+  var totalL = game.stacks.clubs.length +
+               game.stacks.diamonds.length +
+               game.stacks.spades.length +
+               game.stacks.hearts.length;
+  var cardsLeft = 52 - totalL;
+  return cardsLeft;
+}
 
 exports.validate = function(game) {
   return true;
