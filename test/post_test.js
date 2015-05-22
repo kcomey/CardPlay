@@ -12,12 +12,12 @@ var agent = chai.request.agent(app);
 describe('The API responds to GETs & POSTs', function() {
   before(function(done) {
     mongo.User.findOneAndUpdate({
-        username: 'daniel'
+        username: 'daniel',
       }, {
         username: 'daniel',
-        password: 'test'
+        password: 'test',
       }, {
-        upsert: true
+        upsert: true,
       },
       function(err, doc) {
         if (err) {
@@ -29,7 +29,7 @@ describe('The API responds to GETs & POSTs', function() {
 
   after(function(done) {
     mongo.User.findOneAndRemove({
-      username: 'daniel'
+      username: 'daniel',
     }, function(err, doc) {
       if (err) {
         return err;
@@ -51,7 +51,7 @@ describe('The API responds to GETs & POSTs', function() {
       .redirects(0)
       .send({
         username: 'daniel',
-        password: 'hunter2'
+        password: 'hunter2',
       })
       .end(function(err, res) {
         expect(res).to.redirectTo('/login');
@@ -65,7 +65,7 @@ describe('The API responds to GETs & POSTs', function() {
       .redirects(0)
       .send({
         username: 'daniel',
-        password: 'test'
+        password: 'test',
       })
       .end(function(err, res) {
         expect(res).to.have.status(200);
@@ -84,7 +84,7 @@ describe('The API responds to GETs & POSTs', function() {
   it('should be able to draw 8 times on a fresh deck', function(done) {
     var gameURL;
     var drawAction = {
-      action: 'draw'
+      action: 'draw',
     };
     agent.get('/solitaire/newgame')
       .then(function(res) {
@@ -130,7 +130,7 @@ describe('The API responds to GETs & POSTs', function() {
   it('should not be able to draw 9 times on a fresh deck', function(done) {
     var gameURL;
     var drawAction = {
-      action: 'draw'
+      action: 'draw',
     };
     agent.get('/solitaire/newgame')
       .then(function(res) {
@@ -180,7 +180,7 @@ describe('The API responds to GETs & POSTs', function() {
   it('should be able to draw 8 times then flip', function(done) {
     var gameURL;
     var drawAction = {
-      action: 'draw'
+      action: 'draw',
     };
     agent.get('/solitaire/newgame')
       .then(function(res) {
@@ -219,7 +219,7 @@ describe('The API responds to GETs & POSTs', function() {
       .then(function(res) {
         expect(res).to.have.status(200);
         return agent.post(gameURL).send({
-          action: 'flip'
+          action: 'flip',
         });
       })
       .then(function(res) {
@@ -236,7 +236,7 @@ describe('The API responds to GETs & POSTs', function() {
         gameURL = res.req.path;
         expect(res).to.have.status(200);
         return agent.post(gameURL).send({
-          action: 'flip'
+          action: 'flip',
         });
       })
       .then(function(res) {
@@ -377,8 +377,9 @@ describe('The API responds to GETs & POSTs', function() {
       })
       .then(function(res) {
         expect(res).to.have.status(200);
-        expect(res.text).to.eql('<img src="https://www.theproducersperspective.com/' +
-                                'wp-content/uploads/2012/06/YouWin2.png">\n');
+        expect(res.text).to
+        .eql('<img src="https://www.theproducersperspective.com/' +
+          'wp-content/uploads/2012/06/YouWin2.png">\n');
         return done();
       })
       .catch(done); // Call done(err) to fail the test on any error
