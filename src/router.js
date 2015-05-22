@@ -227,7 +227,7 @@ app.get('/solitaire/game/:gameID', function(req, res) {
         '" method="post">';
         form += '<br><input type="text" name="cardID" value="">';
         form += '<p>move from: <select name="movefrom">';
-        form += '<option value="drawpile">Draw Pile</option><option value="0">';
+        form += '<option value="draw">Draw Pile</option><option value="0">';
         form += '0</option>';
         form += '<option value="1">1</option><option value="2">2</option>';
         form += '<option value="3">3</option><option value="4">4</option>';
