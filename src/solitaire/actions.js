@@ -57,7 +57,8 @@ exports.move = function(card, fromStack, toStack, game) {
         newGame.stacks[fromStack].visible = newGame.stacks[fromStack]
           .visible.slice(index);
       }
-      if (newGame.stacks[fromStack].visible.length === 0) {
+      if (newGame.stacks[fromStack].visible.length === 0 &&
+        newGame.stacks[fromStack].hidden.length > 0) {
         return this.reveal(fromStack, newGame);
       } else {
         return newGame;

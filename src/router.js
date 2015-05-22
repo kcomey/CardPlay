@@ -104,7 +104,7 @@ module.exports = function router(app) {
         '" method="post">';
         form += '<br><input type="text" name="cardID" value="">';
         form += '<p>move from: <select name="movefrom">';
-        form += '<option value="drawpile">Draw Pile</option><option value="0">';
+        form += '<option value="draw">Draw Pile</option><option value="0">';
         form += '0</option>';
         form += '<option value="1">1</option><option value="2">2</option>';
         form += '<option value="3">3</option><option value="4">4</option>';
@@ -235,7 +235,7 @@ module.exports = function router(app) {
           if (newGame) {
             authenticateUser.saveState(newGame, function(err, result) {
               if (err) {
-                res.status(500).send('Could not save to database');
+                res.status(500).send('Could not savegame/210077ec679402c5game/210077ec679402c5 to database');
               } else {
                 res.redirect('/solitaire/game/' + req.params.gameID);
               }
