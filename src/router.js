@@ -338,6 +338,15 @@ app.get('/solitaire/game/:gameID', function(req, res) {
         }
         formatGame += '</tr></table>';
 
+
+        // Card # Table
+        formatGame += '<table>';
+        for (var cardNo = 1; cardNo <= 52; cardNo++) {
+          formatGame += '<tr><th>Card #' + cardNo + '</th>';
+          formatGame += '<td>' + cardToUnicode(cardNo) + '</td></tr>';
+        }
+        formatGame += '</table>';
+
         var htmlFooter = '</body></html>';
 
         res.status(200).send(htmlHeader + form + formatGame +
