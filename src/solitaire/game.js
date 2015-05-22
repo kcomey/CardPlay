@@ -229,7 +229,7 @@ exports.cardsLeft = function(game) {
                game.stacks.hearts.length;
   var cardsLeft = 52 - totalL;
   return cardsLeft;
-}
+};
 
 exports.validate = function(game) {
   return true;

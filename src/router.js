@@ -333,9 +333,9 @@ app.get('/solitaire/game/:gameID', function(req, res) {
         formatGame += '</tr><tr>'; // Separate rows
 
         // Hidden cards
-        for (var i = 0; i < 7; i++) {
+        for (i = 0; i < 7; i++) {
           formatGame += '<td valign="top"><ul>';
-          for (var j = 0; j < game.stacks[''+i].hidden.length; j++) {
+          for (j = 0; j < game.stacks[''+i].hidden.length; j++) {
             formatGame += '<li>' +
             cardToUnicode(game.stacks[''+i].hidden[j], true) + '</li>';
           }
