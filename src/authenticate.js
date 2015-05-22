@@ -31,9 +31,9 @@ exports.isAuthenticated = function(req, res, next) {
   var token = req.cookies.session;
   if (token === undefined) {
     res.redirect('/login');
+    return;
   }
   mongo.User.findOne({ session: token }, function(err, user) {
-    console.log('user is ' + user);
     if (err) {
       return err;
     }
