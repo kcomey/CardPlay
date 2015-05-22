@@ -15,7 +15,7 @@ describe('Tests to check Passport authenication and x-api-keys', function() {
       {upsert: true},
       function(err, doc) {
         if (err) {
-          return err;
+          done();
         }
         console.log('user daniel created');
       });
@@ -25,7 +25,7 @@ describe('Tests to check Passport authenication and x-api-keys', function() {
   after(function(done) {
     mongo.User.findOneAndRemove({username: 'daniel'}, function(err, doc) {
       if (err) {
-        return err;
+        done();
       }
       console.log('user daniel removed');
     });
