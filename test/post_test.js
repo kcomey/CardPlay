@@ -298,4 +298,69 @@ describe('The API responds to GETs & POSTs', function() {
       })
       .catch(done); // Call done(err) to fail the test on any error
   });
+
+  it('should move an entire stack of cards on the chain deck', function(done) {
+    var gameURL;
+    agent.get('/solitaire/newgame?key=chain')
+      .then(function(res) {
+        gameURL = res.req.path;
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'move',
+          movefrom: '6',
+          moveto: '5',
+          cardID: 14,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'move',
+          movefrom: '5',
+          moveto: '4',
+          cardID: 2,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'move',
+          movefrom: '4',
+          moveto: '3',
+          cardID: 16,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'move',
+          movefrom: '3',
+          moveto: '2',
+          cardID: 4,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'move',
+          movefrom: '2',
+          moveto: '1',
+          cardID: 18,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'move',
+          movefrom: '1',
+          moveto: '0',
+          cardID: 4,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return done();
+      })
+      .catch(done); // Call done(err) to fail the test on any error
+  });
 });
