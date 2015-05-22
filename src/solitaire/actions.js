@@ -93,7 +93,9 @@ exports.promote = function(card, fromStack, game) {
     newGame.stacks[suit] = [card].concat(game.stacks[suit]);
     newGame.stacks[fromStack].visible = game.stacks[fromStack].visible.slice(1);
   }
-
+  if (solitaire.cardsLeft(game) === 1) {
+    newGame.options.won = true;
+  }
   return newGame;
 };
 

@@ -7,6 +7,7 @@ module.exports.Solitaire = db.model('solitaire', {
     draw: Number,
     game: String,
     id: String,
+    won: Boolean,
   },
   deck: Array,
   stacks: {

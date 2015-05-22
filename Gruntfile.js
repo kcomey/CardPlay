@@ -1,40 +1,38 @@
 module.exports = function(grunt) {
-
   grunt.initConfig({
+    jshint: {
+      all: {
+        src: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+        options: {
+          node: true,
+          mocha: true,
+          expr: true,
+        },
+      },
+    },
 
-  jshint: {
-    all: {
+    simplemocha: {
+      src: ['test/**/*.js'],
+    },
+
+    jscs: {
       src: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
       options: {
-        node: true,
-        mocha: true,
-        expr: true
-      }
-    }
-  },
+        config: '.jscsrc',
+      },
+    },
 
-  simplemocha: {
-     src: ['test/**/*.js']
-  },
+    watch: {
+      files: ['test/**/*.js'],
+      tasks: ['jshint', 'simplemocha', 'jscs'],
+    },
+  });
 
-jscs: {
-    src: 'src/**/*.js',
-    options: {
-        config: ".jscsrc"
-    }
-},
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-simple-mocha');
+  grunt.loadNpmTasks('grunt-jscs');
 
-  watch: {
-    files: ['test/**/*.js',''],
-    tasks: ['jshint', 'simplemocha', 'jscs']
-  }
-});
-
-grunt.loadNpmTasks('grunt-contrib-jshint');
-grunt.loadNpmTasks('grunt-simple-mocha');
-grunt.loadNpmTasks('grunt-jscs');
-
-grunt.registerTask('default', ['jshint', 'simplemocha', 'jscs']);
-grunt.registerTask('test', ['simplemocha']);
+  grunt.registerTask('default', ['jshint', 'simplemocha', 'jscs']);
+  grunt.registerTask('test', ['simplemocha']);
 
 };
