@@ -120,7 +120,29 @@ module.exports = function router(app) {
         form += '"unpromote">Unpromote</option></select>';
         form += '<p><input type="submit" name="login" value="Submit Action">';
         form += '</form>\n';
-        res.status(200).send(form + JSON.stringify(game));
+
+        var arr = Object.keys(game).map(function(k) { return game[k] });
+        var arr2 = Object.keys(arr[4]).map(function(k) { return arr[4][k] });
+        var formatGame= '<p>';
+
+        var label = ['Hearts', 'Spades', 'Diamonds', 'Clubs', 'Draw'];
+
+        for (var i = 0; i<arr2.length; i++) {
+          if ((typeof(arr2[i]) === 'object') && arr2[i] !== null) {
+            if (i < 7) {
+              formatGame += ('Stack: ' + i + '<br>');
+            } else  {
+              formatGame += (label[i-7] + ': ' + '<br>');
+            }
+            for (var key in arr2[i]) {
+              if (arr2[i].hasOwnProperty(key)) {
+                formatGame += (key + ' ' + arr2[i][key] + '<br>');
+              }
+            }
+            formatGame += '<p>';
+          }
+        }
+        res.status(200).send(form + formatGame + JSON.stringify(game));
       }
     });
   });
