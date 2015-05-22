@@ -114,6 +114,10 @@ exports.create = function(options) {
     .reverse();
     game.stacks[0].visible = [52];
     return game;
+  } else if (options.deck === 'fix') {
+      game = {"deck":[45,47,48,49,50,51],"options":{"draw":1,"game":"solitaire","id":"f8d45ab721d925d6","won":false},"stacks":{"0":{"visible":[28,42,4,44,32,46,8,22,10,24,38,26],"hidden":[]},"1":{"visible":[2],"hidden":[]},"2":{"visible":[52],"hidden":[]},"3":{"visible":[37,25,39],"hidden":[]},"4":{"visible":[3,43,31,19,33,21,9,23],"hidden":[20,16,11,5]},"5":{"visible":[17],"hidden":[12,6]},"6":{"visible":[18],"hidden":[13,7]},"hearts":[41,40],"spades":[27],"diamonds":[15,14],"clubs":[1],"draw":[36,35,34,30,29]}};
+      game.options.id = keygen.hex(keygen.small);
+      return game;
   }
 
   for (var i = 0; i <= 6; i++) {
