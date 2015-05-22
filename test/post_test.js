@@ -363,4 +363,24 @@ describe('The API responds to GETs & POSTs', function() {
       })
       .catch(done); // Call done(err) to fail the test on any error
   });
+  it('if game is won, should send You Won image', function(done) {
+    var gameURL;
+    agent.get('/solitaire/newgame?key=easy')
+      .then(function(res) {
+        gameURL = res.req.path;
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'promote',
+          movefrom: '0',
+          cardID: 52,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        expect(res.text).to.eql('<img src="https://www.theproducersperspective.com/' +
+                                'wp-content/uploads/2012/06/YouWin2.png">\n');
+        return done();
+      })
+      .catch(done); // Call done(err) to fail the test on any error
+  });
 });
