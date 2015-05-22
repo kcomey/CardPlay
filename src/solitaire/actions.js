@@ -86,11 +86,11 @@ exports.promote = function(card, fromStack, game) {
       card !== newGame.stacks.draw[0]) {
       return null;
     } // Can't promote if not top of draw pile
-    if (game.stacks[suit].length === 0 &&
-      solitaire.getRank(card) !== 1) {
-      return null;
-    } // Can't promote to empty pile unless Ace
-    if (solitaire.getRank(game.stacks[suit][0]) + 1 !== solitaire.getRank(card)) {
+    if (game.stacks[suit].length === 0) {
+      if (solitaire.getRank(card) !== 1) {
+        return null;
+      } // Can't promote to empty pile unless Ace
+    } else if (solitaire.getRank(game.stacks[suit][0]) + 1 !== solitaire.getRank(card)) {
       return null;
     } // Can't promote card unless is next-to-be-promoted
   
@@ -103,11 +103,11 @@ exports.promote = function(card, fromStack, game) {
     if (game.stacks[fromStack].visible[0] !== card) {
       return null;
     } // Can't promote a card not on top
-    if (game.stacks[suit].length === 0 &&
-      solitaire.getRank(card) !== 1) {
-      return null;
-    } // Can't promote to empty pile unless Ace
-    if (solitaire.getRank(game.stacks[suit][0]) + 1 !== solitaire.getRank(card)) {
+    if (game.stacks[suit].length === 0) {
+      if (solitaire.getRank(card) !== 1) {
+        return null;
+      } // Can't promote to empty pile unless Ace
+    } else if (solitaire.getRank(game.stacks[suit][0]) + 1 !== solitaire.getRank(card)) {
       return null;
     } // Can't promote card unless is next-to-be-promoted
 
