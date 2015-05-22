@@ -93,7 +93,7 @@ exports.promote = function(card, fromStack, game) {
     } else if (solitaire.getRank(game.stacks[suit][0]) + 1 !== solitaire.getRank(card)) {
       return null;
     } // Can't promote card unless is next-to-be-promoted
-  
+
     newGame.stacks[suit] = [card].concat(game.stacks[suit]);
     newGame.stacks.draw = newGame.stacks.draw.slice(1);
   } else {
@@ -113,6 +113,10 @@ exports.promote = function(card, fromStack, game) {
 
     newGame.stacks[suit] = [card].concat(game.stacks[suit]);
     newGame.stacks[fromStack].visible = game.stacks[fromStack].visible.slice(1);
+    if (newGame.stacks[fromStack].visible.length === 0 &&
+        newGame.stacks[fromStack].hidden.length > 0) {
+          newGame = this.reveal(fromStack, newGame);
+        }
   }
   if (solitaire.cardsLeft(game) === 1) {
     newGame.options.won = true;
