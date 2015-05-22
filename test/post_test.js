@@ -245,4 +245,57 @@ describe('The API responds to GETs & POSTs', function() {
       })
       .catch(done); // Call done(err) to fail the test on any error
   });
+
+  it('should promote the Ace of Clubs when unshuffled', function(done) {
+    var gameURL;
+    agent.get('/solitaire/newgame?key=un')
+      .then(function(res) {
+        gameURL = res.req.path;
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'promote',
+          movefrom: '0',
+          cardID: 1,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return done();
+      })
+      .catch(done); // Call done(err) to fail the test on any error
+  });
+
+  it('should unpromote the Ace of Clubs on a special deck', function(done) {
+    var gameURL;
+    agent.get('/solitaire/newgame?key=special')
+      .then(function(res) {
+        gameURL = res.req.path;
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'promote',
+          movefrom: '1',
+          cardID: 1,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'reveal',
+          movefrom: '1',
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'unpromote',
+          movefrom: '1',
+          cardID: 1,
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return done();
+      })
+      .catch(done); // Call done(err) to fail the test on any error
+  });
 });
