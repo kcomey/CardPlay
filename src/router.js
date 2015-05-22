@@ -88,6 +88,11 @@ module.exports = function router(app) {
         deck: 'easy',
       };
       newGame = game.create(easy);
+    } else if (req.query.key === 'lucky') {
+      var lucky = {
+        deck: 'lucky',
+      };
+      newGame = game.create(lucky);
     } else {
       newGame = game.create();
     }
