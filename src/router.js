@@ -63,7 +63,12 @@ module.exports = function router(app) {
 
   app.get('/solitaire/newgame', function(req, res) {
     var newGame;
-    if (req.query.key === 'un') {
+    if (req.query.key === 'fix') {
+      var fix = {
+        deck: 'fix',
+      };
+      newGame = game.create(fix);
+    } else if (req.query.key === 'un') {
       var unshuffled = {
         deck: 'unshuffled',
       };
