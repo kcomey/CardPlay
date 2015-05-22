@@ -280,13 +280,6 @@ describe('The API responds to GETs & POSTs', function() {
       .then(function(res) {
         expect(res).to.have.status(200);
         return agent.post(gameURL).send({
-          action: 'reveal',
-          movefrom: '1',
-        });
-      })
-      .then(function(res) {
-        expect(res).to.have.status(200);
-        return agent.post(gameURL).send({
           action: 'unpromote',
           movefrom: '1',
           cardID: 1,
