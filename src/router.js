@@ -162,7 +162,8 @@ module.exports = function router(app) {
               if (err) {
                 res.status(500).send('Could not save to database');
               } else if (newGame.options.won === true) {
-                res.send('<img src="https://www.theproducersperspective.com/' +
+                res.status(200)
+                .send('<img src="https://www.theproducersperspective.com/' +
                          'wp-content/uploads/2012/06/YouWin2.png">\n');
               } else {
                 res.redirect('/solitaire/game/' + req.params.gameID);
