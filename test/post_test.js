@@ -176,4 +176,73 @@ describe('The API responds to GETs & POSTs', function() {
       })
       .catch(done); // Call done(err) to fail the test on any error
   });
+
+  it('should be able to draw 8 times then flip', function(done) {
+    var gameURL;
+    var drawAction = {
+      action: 'draw'
+    };
+    agent.get('/solitaire/newgame')
+      .then(function(res) {
+        gameURL = res.req.path;
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send(drawAction);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send(drawAction);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send(drawAction);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send(drawAction);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send(drawAction);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send(drawAction);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send(drawAction);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send(drawAction);
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'flip'
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(200);
+        return done();
+      })
+      .catch(done); // Call done(err) to fail the test on any error
+  });
+
+  it('should not be able to flip on a fresh deck', function(done) {
+    var gameURL;
+    agent.get('/solitaire/newgame')
+      .then(function(res) {
+        gameURL = res.req.path;
+        expect(res).to.have.status(200);
+        return agent.post(gameURL).send({
+          action: 'flip'
+        });
+      })
+      .then(function(res) {
+        expect(res).to.have.status(400);
+        return done();
+      })
+      .catch(done); // Call done(err) to fail the test on any error
+  });
 });
